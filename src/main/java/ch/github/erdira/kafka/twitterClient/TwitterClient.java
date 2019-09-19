@@ -1,5 +1,6 @@
-package ch.github.erdira.kafka;
+package ch.github.erdira.kafka.twitterClient;
 
+import ch.github.erdira.kafka.twitterClient.AuthKeys;
 import com.google.common.collect.Lists;
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Client;
@@ -13,7 +14,6 @@ import com.twitter.hbc.httpclient.auth.OAuth1;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class TwitterClient {
 

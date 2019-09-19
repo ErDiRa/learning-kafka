@@ -1,6 +1,11 @@
 package ch.github.erdira.kafka;
 
+import ch.github.erdira.kafka.twitterClient.TwitterClient;
 import com.twitter.hbc.core.Client;
+import org.apache.kafka.clients.producer.Callback;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +19,10 @@ import java.util.concurrent.TimeUnit;
 public class TwitterProducer {
 
     public static final Logger LOG = LoggerFactory.getLogger(TwitterProducer.class);
+
+    private String url = "localhost";
+    private String port = "9092";
+    Producer<String, String> producer = KafkaHelper.initProducer(url, port);
 
     public void run(){
         // create twitter client
@@ -36,6 +45,16 @@ public class TwitterProducer {
 
             if (msg != null){
                 LOG.info(msg);
+                //TODO: do not forget to create the topic before using:
+                /*kafka-topics.sh --zookeeper 127.0.0.1:2181 --create --topic twitter_tweets --partitions 6 --replication-factor*/
+                producer.send(new ProducerRecord<>("twitter_tweets", null, msg), new Callback() {
+                    @Override
+                    public void onCompletion(RecordMetadata metadata, Exception exception) {
+                        if (exception != null){
+                            LOG.error("onCompletion for producer failed", exception);
+                        }
+                    }
+                });
             }
 
         }

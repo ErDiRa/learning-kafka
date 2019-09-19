@@ -35,3 +35,5 @@ out
 
 *.attach_pid*
 
+
+src/main/java/ch/github/erdira/kafka/AuthKeys.java

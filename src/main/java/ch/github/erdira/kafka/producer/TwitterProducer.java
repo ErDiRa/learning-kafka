@@ -25,22 +25,16 @@ public class TwitterProducer {
     private static String port = "9092";
     private static final Producer<String, String> producer = KafkaHelper.initProducer(url, port);
 
+    private static final BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
+    private static final Client client =  TwitterClient.create(msgQueue);
+
     private TwitterProducer(){}
 
     public static void run(){
         // create twitter client
         /* Set up your blocking queues: Be sure to size these properly based on expected TPS of your stream */
-        BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
-        Client client =  TwitterClient.create(msgQueue);
-        client.connect();
 
-        // shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(()-> {
-            LOG.info("Shutting down application...");
-            client.stop();
-            producer.flush();
-            producer.close();
-        }));
+        client.connect();
 
         // create kafka producer
 
@@ -72,8 +66,15 @@ public class TwitterProducer {
         }
     }
 
-    public Producer<String, String> getProducer(){
+    public static Producer<String, String> getProducer(){
         return producer;
+    }
+
+    public static void shutdown(){
+        LOG.info("Shuttind down client and producer...");
+        client.stop();
+        producer.flush();
+        producer.close();
     }
 
 }

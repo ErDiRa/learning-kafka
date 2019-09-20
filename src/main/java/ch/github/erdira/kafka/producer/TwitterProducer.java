@@ -27,7 +27,7 @@ public class TwitterProducer {
 
     private TwitterProducer(){}
 
-    public void run(){
+    public static void run(){
         // create twitter client
         /* Set up your blocking queues: Be sure to size these properly based on expected TPS of your stream */
         BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);

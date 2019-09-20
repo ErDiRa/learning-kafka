@@ -24,9 +24,9 @@ public class ConsumerToElasticSearch {
     private static final String TOPIC = "twitter_tweets";
 
     private static final String URL = "localhost";
-    private static final String PROT = "9092";
+    private static final String PORT = "9092";
     private static final String GROUP_ID = "kafka-demo-elasticsearch";
-    private static final Consumer<String,String> consumer = KafkaHelper.initConsumer(URL,PROT,GROUP_ID,TOPIC);
+    private static final Consumer<String,String> consumer = KafkaHelper.initConsumer(URL, PORT,GROUP_ID,TOPIC);
 
     public static void run() throws IOException {
         RestHighLevelClient client = ElasticSearchClient.createClient();
@@ -41,25 +41,12 @@ public class ConsumerToElasticSearch {
                     LOG.info("Partition: " +  consumerRecord.partition());
                     LOG.info("Offset: " + consumerRecord.offset());
 
-                    IndexRequest indexRequest = new IndexRequest(
-                            "twitter",//make sure the index has been created upfront on bonsai using the console and a rest put via /twitter
-                            "tweets"
-                    ).source(consumerRecord.value(), XContentType.JSON);
-
-                    IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
-                    String id = indexResponse.getId();
-
-                    LOG.info("ID: " + id);
-
-                    Thread.sleep(1000);
+                    processData(client,consumerRecord);
 
                 }
             }
         }catch(WakeupException e){
             LOG.info("Received Shutdown signal");
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } finally {
             consumer.close();
             client.close();
@@ -68,6 +55,22 @@ public class ConsumerToElasticSearch {
 
     public static void shutdown(){
         consumer.wakeup();
+    }
+
+    /**
+     *Insert data into elastic search hosted on bonsai ("Processing the data")
+     */
+    private static void processData(RestHighLevelClient client, ConsumerRecord<String, String> consumerRecord) throws IOException {
+
+        IndexRequest indexRequest = new IndexRequest(
+                "twitter",//make sure the index has been created upfront on bonsai using the console and a rest put via /twitter
+                "tweets"
+        ).source(consumerRecord.value(), XContentType.JSON);
+
+        IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
+        String id = indexResponse.getId();
+
+        LOG.info("ID: " + id);
     }
 
 

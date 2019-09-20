@@ -15,6 +15,10 @@ import com.twitter.hbc.httpclient.auth.OAuth1;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Used to connect to twitter api.
+ * Use terms to define streams you want to listen to
+ */
 public class TwitterClient {
 
     public static Client create(BlockingQueue<String> msgQueue){

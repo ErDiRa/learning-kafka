@@ -15,15 +15,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * used as twitter client
+ * used for feeding kafka with twitter feeds
  */
 public class TwitterProducer {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwitterProducer.class);
 
-    private String url = "localhost";
-    private String port = "9092";
-    private Producer<String, String> producer = KafkaHelper.initProducer(url, port);
+    private static String url = "localhost";
+    private static String port = "9092";
+    private static final Producer<String, String> producer = KafkaHelper.initProducer(url, port);
 
     private TwitterProducer(){}
 
@@ -64,7 +64,7 @@ public class TwitterProducer {
     }
 
     public Producer<String, String> getProducer(){
-        return this.producer;
+        return producer;
     }
 
 }

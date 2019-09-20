@@ -1,3 +1,4 @@
 rootProject.name = 'twitterProcessing'
 include 'kafkaProducer'
+include 'kafkaConsumer'
 

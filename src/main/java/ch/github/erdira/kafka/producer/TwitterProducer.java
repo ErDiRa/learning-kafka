@@ -1,5 +1,6 @@
-package ch.github.erdira.kafka;
+package ch.github.erdira.kafka.producer;
 
+import ch.github.erdira.kafka.KafkaHelper;
 import ch.github.erdira.kafka.twitterClient.TwitterClient;
 import com.twitter.hbc.core.Client;
 import org.apache.kafka.clients.producer.Callback;
@@ -18,11 +19,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class TwitterProducer {
 
-    public static final Logger LOG = LoggerFactory.getLogger(TwitterProducer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TwitterProducer.class);
 
     private String url = "localhost";
     private String port = "9092";
-    Producer<String, String> producer = KafkaHelper.initProducer(url, port);
+    private Producer<String, String> producer = KafkaHelper.initProducer(url, port);
+
+    private TwitterProducer(){}
 
     public void run(){
         // create twitter client
@@ -58,6 +61,10 @@ public class TwitterProducer {
             }
 
         }
+    }
+
+    public Producer<String, String> getProducer(){
+        return this.producer;
     }
 
 }

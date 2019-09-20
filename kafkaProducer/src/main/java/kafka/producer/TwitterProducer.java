@@ -1,8 +1,9 @@
-package ch.github.erdira.kafka.producer;
+package kafka.producer;
 
-import ch.github.erdira.kafka.KafkaHelper;
-import ch.github.erdira.kafka.twitterClient.TwitterClient;
+;
 import com.twitter.hbc.core.Client;
+import kafka.KafkaHelper;
+import kafka.twitterClient.TwitterClient;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;

@@ -1,0 +1,16 @@
+ext {
+    libraries = [:]
+}
+
+def kafkaVersion = '2.3.0'
+libraries.kafka= "org.apache.kafka:kafka-clients:${kafkaVersion}"
+
+def twitterHbcVersion = '2.2.0'
+libraries.twitterHbc = "com.twitter:hbc-core:${twitterHbcVersion}"
+
+def log4jVersion = '2.12.0'
+libraries.log4j = [
+        "org.apache.logging.log4j:log4j-api:$log4jVersion",
+        "org.apache.logging.log4j:log4j-core:$log4jVersion",
+        "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
+]

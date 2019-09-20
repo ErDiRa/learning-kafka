@@ -1,4 +1,4 @@
-package ch.github.erdira.kafka;
+package kafka;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

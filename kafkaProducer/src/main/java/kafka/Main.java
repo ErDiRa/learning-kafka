@@ -1,6 +1,7 @@
-package ch.github.erdira.kafka;
+package kafka;
 
-import ch.github.erdira.kafka.producer.TwitterProducer;
+
+import kafka.producer.TwitterProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

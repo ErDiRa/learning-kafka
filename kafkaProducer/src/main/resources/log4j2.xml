@@ -4,7 +4,7 @@
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <RollingFile name="learning-kafka" fileName="learning-kafka.log" filePattern="learning-kafka-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="kafkaProducer" fileName="kafkaProducer.log" filePattern="kafkaProducer-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="100 MB"/>
@@ -15,7 +15,7 @@
     <loggers>
         <root level="debug">
             <appender-ref ref="console"/>
-            <appender-ref ref="learning-kafka"/>
+            <appender-ref ref="kafkaProducer"/>
         </root>
     </loggers>
 </configuration>

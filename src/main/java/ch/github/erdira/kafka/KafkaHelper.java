@@ -8,6 +8,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.Properties;
 
@@ -20,6 +21,13 @@ public class KafkaHelper {
         props.put(ProducerConfig.ACKS_CONFIG, "all"); //wait for all replicas to acknowledge data
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+        //Add safety:
+        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        props.put("min.insync.replicas","2");
+        props.put(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));
+        props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, "5"); //Just use 5 if kafka version >2.0 otherwise use 1
+
 
         Producer<String, String> producer = new KafkaProducer<String, String>(props);
 
@@ -35,6 +43,7 @@ public class KafkaHelper {
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         if (groupId != null) properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
 
         return new KafkaConsumer<>(properties);
 

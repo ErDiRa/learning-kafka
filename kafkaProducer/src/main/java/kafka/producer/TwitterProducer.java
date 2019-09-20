@@ -31,6 +31,7 @@ public class TwitterProducer {
 
     private TwitterProducer(){}
 
+    //ToDO: add as argument the topic
     public static void run(){
         // create twitter client
         /* Set up your blocking queues: Be sure to size these properly based on expected TPS of your stream */

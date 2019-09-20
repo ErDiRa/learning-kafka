@@ -45,23 +45,4 @@ public class ElasticSearchClient {
 
     }
 
-    public static void main(String[] args) throws IOException {
-        RestHighLevelClient client = createClient();
-
-        String jsonString = "{ \"foo\" : \"bar\" }";
-
-        IndexRequest indexRequest = new IndexRequest(
-                "twitter",//make sure the index has been created upfront on bonsai using the console and a rest put via /twitter
-                "tweets"
-        ).source(jsonString, XContentType.JSON);
-
-        IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
-        String id = indexResponse.getId();
-
-        LOG.info("ID: " + id);
-
-        client.close();
-
-    }
-
 }

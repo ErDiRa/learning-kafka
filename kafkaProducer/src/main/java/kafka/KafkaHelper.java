@@ -36,19 +36,4 @@ public class KafkaHelper {
         return new KafkaProducer<String, String>(props);
     }
 
-    public static Consumer<String, String> initConsumer(String url, String port, String groupId){
-
-        //Set the properties
-        Properties properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,url + ":" + port);
-        properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        if (groupId != null) properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-
-
-        return new KafkaConsumer<>(properties);
-
-    }
-
 }

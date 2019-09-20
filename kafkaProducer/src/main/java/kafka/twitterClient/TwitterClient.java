@@ -20,7 +20,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class TwitterClient {
 
-    private static final List<String> terms = Lists.newArrayList("bitcoin", "sport", "fhnw");
+    private static final List<String> terms = Lists.newArrayList("bitcoin", "fhnw");
 
     public static Client create(BlockingQueue<String> msgQueue){
 

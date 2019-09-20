@@ -21,6 +21,8 @@ import java.util.concurrent.BlockingQueue;
  */
 public class TwitterClient {
 
+    private static final List<String> terms = Lists.newArrayList("bitcoin");
+
     public static Client create(BlockingQueue<String> msgQueue){
 
 
@@ -28,7 +30,7 @@ public class TwitterClient {
         Hosts hosebirdHosts = new HttpHosts(Constants.STREAM_HOST);
         StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
 
-        List<String> terms = Lists.newArrayList("bitcoin");
+
         hosebirdEndpoint.trackTerms(terms);
 
         // These secrets should be read from a config file

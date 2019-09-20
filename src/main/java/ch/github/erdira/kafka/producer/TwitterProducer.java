@@ -33,6 +33,15 @@ public class TwitterProducer {
         BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
         Client client =  TwitterClient.create(msgQueue);
         client.connect();
+
+        // shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+            LOG.info("Shutting down application...");
+            client.stop();
+            producer.flush();
+            producer.close();
+        }));
+
         // create kafka producer
 
         // loop to send tweets to kafka

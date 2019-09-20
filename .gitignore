@@ -36,4 +36,4 @@ out
 *.attach_pid*
 
 
-src/main/java/ch/github/erdira/kafka/twitterClient/AuthKeys.java
+AuthKeys.java

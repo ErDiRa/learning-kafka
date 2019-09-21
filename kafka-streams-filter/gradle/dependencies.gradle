@@ -1,0 +1,19 @@
+ext {
+    libraries = [:]
+}
+
+def kafkaVersion = '2.3.0'
+libraries.kafka= "org.apache.kafka:kafka-clients:${kafkaVersion}"
+
+def gsonVersion = "2.8.5"
+libraries.gson = "com.google.code.gson:gson:${gsonVersion}"
+
+def kafkaStreamVersion = '2.3.0'
+libraries.kafkaStream = "org.apache.kafka:kafka-streams:${kafkaVersion}"
+
+def log4jVersion = '2.12.0'
+libraries.log4j = [
+        "org.apache.logging.log4j:log4j-api:$log4jVersion",
+        "org.apache.logging.log4j:log4j-core:$log4jVersion",
+        "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
+]

@@ -1,4 +1,5 @@
 rootProject.name = 'twitterProcessing'
 include 'kafkaProducer'
 include 'kafkaConsumer'
+include 'kafka-streams-filter'
 

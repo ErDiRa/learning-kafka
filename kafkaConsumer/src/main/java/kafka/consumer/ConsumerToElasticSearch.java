@@ -118,8 +118,9 @@ public class ConsumerToElasticSearch {
 
         }
         if(recordCount > 0 ){
+
             BulkResponse bulkResponse = client.bulk(bulkRequest, RequestOptions.DEFAULT);
-            LOG.info("Committing the offsets...");
+            LOG.info("Committing the offsets..."); //commiting when processing is finished
             consumer.commitSync(); //commit the offset
             LOG.info("Offsets have been committed");
             try {

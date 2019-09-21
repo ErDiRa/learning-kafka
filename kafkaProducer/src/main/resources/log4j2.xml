@@ -13,7 +13,7 @@
         </RollingFile>
     </appenders>
     <loggers>
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="console"/>
             <appender-ref ref="kafkaProducer"/>
         </root>

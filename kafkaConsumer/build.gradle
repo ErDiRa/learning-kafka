@@ -17,4 +17,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile libraries.elasticSearch
     compile libraries.log4j
+    compile libraries.gson
+    compile libraries.kafka
 }

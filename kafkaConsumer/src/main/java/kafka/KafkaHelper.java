@@ -14,6 +14,16 @@ import java.util.Properties;
 
 public class KafkaHelper {
 
+    /**
+     * Consumer default set to at least once for delivery semantics: meaning messages can be read twice but you
+     * will never miss to read a message
+     * @param url of bootstrap server
+     * @param port of bootstrap server
+     * @param groupId of the consumer
+     * @param topic the consumer consumes
+     * @return a ready to use kafka consumer
+     *
+     */
     public static Consumer<String, String> initConsumer(String url, String port, String groupId, String topic){
 
         //Set the properties

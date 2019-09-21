@@ -11,6 +11,9 @@ libraries.twitterHbc = "com.twitter:hbc-core:${twitterHbcVersion}"
 def elasticSearchVersion = '7.2.0'
 libraries.elasticSearch = "org.elasticsearch.client:elasticsearch-rest-high-level-client:${elasticSearchVersion}"
 
+def gsonVersion = "2.8.5"
+libraries.gson = "com.google.code.gson:gson:${gsonVersion}"
+
 def log4jVersion = '2.12.0'
 libraries.log4j = [
         "org.apache.logging.log4j:log4j-api:$log4jVersion",

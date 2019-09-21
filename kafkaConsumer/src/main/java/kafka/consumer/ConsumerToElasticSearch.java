@@ -1,5 +1,6 @@
 package kafka.consumer;
 
+import com.google.gson.JsonParser;
 import kafka.KafkaHelper;
 import kafka.elasticSearchConnection.ElasticSearchClient;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -36,10 +37,6 @@ public class ConsumerToElasticSearch {
                 ConsumerRecords<String,String> consumerRecords = consumer.poll(Duration.ofMillis(100));
 
                 for (ConsumerRecord<String,String> consumerRecord : consumerRecords){
-                    LOG.info("Key:" + consumerRecord.key() + " Value: " + consumerRecord.value());
-                    LOG.info( "Topic: "+ consumerRecord.topic());
-                    LOG.info("Partition: " +  consumerRecord.partition());
-                    LOG.info("Offset: " + consumerRecord.offset());
 
                     processData(client,consumerRecord);
 
@@ -62,17 +59,37 @@ public class ConsumerToElasticSearch {
      */
     private static void processData(RestHighLevelClient client, ConsumerRecord<String, String> consumerRecord) throws IOException {
 
+        // Two strategies to make IDs unique and you consumer idempotent:
+        // 1. kafka generic ID (use when do not have a specific id for you message)
+        //String id = consumerRecord.topic() + "_"+  consumerRecord.partition() + "_" + consumerRecord.offset(); //will identify a message in kafka
+
+        // 2. use the twitter message id
+        String id = extractIdfromTweet(consumerRecord.value());
+
+
         IndexRequest indexRequest = new IndexRequest(
                 "twitter",//make sure the index has been created upfront on bonsai using the console and a rest put via /twitter
-                "tweets"
+                "tweets",
+                id // use the id to request one message
         ).source(consumerRecord.value(), XContentType.JSON);
 
         IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
-        String id = indexResponse.getId();
+        String responseId = indexResponse.getId();
 
-        LOG.info("ID: " + id);
+        LOG.info("ID: " + responseId);
     }
 
+    private static String extractIdfromTweet(String jsonMessage) {
+        JsonParser jsonParser = new JsonParser();
+        String id = jsonParser.parse(jsonMessage)
+                .getAsJsonObject()
+                .get("id_str")
+                .getAsString();
+
+        jsonParser = null;
+
+        return id;
+    }
 
 
 }

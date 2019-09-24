@@ -1,6 +1,5 @@
 package kafka.producer;
 
-;
 import com.twitter.hbc.core.Client;
 import kafka.KafkaHelper;
 import kafka.twitterClient.TwitterClient;
@@ -15,24 +14,25 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+;
+
 /**
  * used for feeding kafka with twitter feeds
  */
 public class TwitterProducer {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwitterProducer.class);
-
+    private static final BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
+    private static final Client client = TwitterClient.create(msgQueue);
     private static String url = "localhost";
     private static String port = "9092";
     private static final Producer<String, String> producer = KafkaHelper.initProducer(url, port);
 
-    private static final BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(1000);
-    private static final Client client =  TwitterClient.create(msgQueue);
-
-    private TwitterProducer(){}
+    private TwitterProducer() {
+    }
 
     //ToDO: add as argument the topic
-    public static void run(){
+    public static void run() {
         // create twitter client
         /* Set up your blocking queues: Be sure to size these properly based on expected TPS of your stream */
 
@@ -51,14 +51,14 @@ public class TwitterProducer {
                 client.stop();
             }
 
-            if (msg != null){
+            if (msg != null) {
                 LOG.info(msg);
                 //TODO: do not forget to create the topic before using:
                 /*kafka-topics.sh --zookeeper 127.0.0.1:2181 --create --topic twitter_tweets --partitions 6 --replication-factor*/
                 producer.send(new ProducerRecord<>("twitter_tweets", null, msg), new Callback() {
                     @Override
                     public void onCompletion(RecordMetadata metadata, Exception exception) {
-                        if (exception != null){
+                        if (exception != null) {
                             LOG.error("onCompletion for producer failed", exception);
                         }
                     }
@@ -68,11 +68,11 @@ public class TwitterProducer {
         }
     }
 
-    public static Producer<String, String> getProducer(){
+    public static Producer<String, String> getProducer() {
         return producer;
     }
 
-    public static void shutdown(){
+    public static void shutdown() {
         LOG.info("Shuttind down client and producer...");
         client.stop();
         producer.flush();

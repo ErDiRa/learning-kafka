@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         // shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             LOG.info("Shutting down application...");
             TwitterProducer.shutdown();
         }));

@@ -3,7 +3,7 @@ ext {
 }
 
 def kafkaVersion = '2.3.0'
-libraries.kafka= "org.apache.kafka:kafka-clients:${kafkaVersion}"
+libraries.kafka = "org.apache.kafka:kafka-clients:${kafkaVersion}"
 
 def twitterHbcVersion = '2.2.0'
 libraries.twitterHbc = "com.twitter:hbc-core:${twitterHbcVersion}"

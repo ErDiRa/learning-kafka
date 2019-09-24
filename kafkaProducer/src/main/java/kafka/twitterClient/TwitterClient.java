@@ -22,7 +22,7 @@ public class TwitterClient {
 
     private static final List<String> terms = Lists.newArrayList("bitcoin", "fhnw");
 
-    public static Client create(BlockingQueue<String> msgQueue){
+    public static Client create(BlockingQueue<String> msgQueue) {
 
 
         /* Declare the host you want to connect to, the endpoint, and authentication (basic auth or oauth) */

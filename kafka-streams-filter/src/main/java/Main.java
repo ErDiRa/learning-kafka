@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        KafkaStreams kafkaStreams = KafkaHelper.initFilterStream(URL,PORT,APP_ID,TOPIC,FILTERED_TOPIC);
+        KafkaStreams kafkaStreams = KafkaHelper.initFilterStream(URL, PORT, APP_ID, TOPIC, FILTERED_TOPIC);
 
         kafkaStreams.start();
 
